@@ -69,7 +69,7 @@ Schema in MySQL:
   -ddlHivetbl "raw_mysql_sakila.actor" \
   -ddlTblFormat "ORC" \
   -ddlPath "/datalake/data/raw/mysql/sakila/actor" \
-  -ddlPart "dlk_cob_date" \
+  -ddlPart "dlk_cob_date string" \
   -ddlBucketing "actor_id" \
   -ddlBucketingFigure "5" \
   -ddlCompress "SNAPPY" \
@@ -87,7 +87,7 @@ With dependencies:
   -ddlHivetbl "raw_mysql_sakila.actor"   \
   -ddlTblFormat "ORC"   \
   -ddlPath "/datalake/data/raw/mysql/sakila/actor"   \
-  -ddlPart "dlk_cob_date"   \
+  -ddlPart "dlk_cob_date string"   \
   -ddlBucketing "actor_id"  \
   -ddlBucketingFigure "5"  \
   -ddlCompress "SNAPPY"   \
@@ -100,7 +100,7 @@ Created hive ddl:
 	last_name STRING,
 	last_update TIMESTAMP
 } 
-PARTITIONED BY (dlk_cob_date) 
+PARTITIONED BY (dlk_cob_date string) 
 CLUSTERED BY (actor_id) INTO 5 BUCKETS 
 STORED AS ORC
 LOCATION "/datalake/data/raw/mysql/sakila/actor"
