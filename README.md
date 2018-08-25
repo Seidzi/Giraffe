@@ -94,12 +94,12 @@ With dependencies:
   -ddlExternal</pre>
 
 Created hive ddl:
-<pre>create external table raw_mysql_sakila.actor { 
+<pre>create external table raw_mysql_sakila.actor (
 	actor_id INT,
 	first_name STRING,
 	last_name STRING,
 	last_update TIMESTAMP
-} 
+) 
 PARTITIONED BY (dlk_cob_date string) 
 CLUSTERED BY (actor_id) INTO 5 BUCKETS 
 STORED AS ORC
