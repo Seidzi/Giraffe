@@ -14,14 +14,14 @@ class DDL {
     var schema = "create"
     if (baseArgs.getDDLExternal)
       schema = schema + " external "
-    schema = schema + "table " + baseArgs.getDDLHivetbl + " { \n"
+    schema = schema + "table " + baseArgs.getDDLHivetbl + " ( \n"
     for (i <- 0 until extSchema.length) {
       schema = schema + "\t" + extSchema.apply(i).name + " " + extSchema.apply(i).dataType.sql
       if (i < extSchema.length - 1)
         schema = schema + ","
       schema = schema + "\n"
     }
-    schema = schema + "} \n"
+    schema = schema + ") \n"
     if (!baseArgs.getDDLPart.equals(""))
       schema = schema + "PARTITIONED BY (" + baseArgs.getDDLPart + ") \n"
     if (!baseArgs.getDDLBucketing.equals("")) {
