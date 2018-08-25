@@ -1,5 +1,5 @@
 # Giraffe
-A tool for automatically creating a table from an external source schema
+A tool for automatically creating a table ddl from an external source schema
 
 Usage: Giraffe [options]
   Options:
