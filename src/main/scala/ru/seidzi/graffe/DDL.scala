@@ -11,10 +11,12 @@ class DDL {
   val ANSI_RED = "\u001B[31m"
 
   def create(extSchema: StructType, baseArgs: BaseArgs): Unit = {
-    var schema = "create"
+    var schema = "CREATE SCHEMA IF NOT EXISTS " + baseArgs.getDDLHivetbl.split("[.]").apply(0) + ";\n\n"
+    schema = schema + "DROP TABLE IF EXISTS " + baseArgs.getDDLHivetbl + ";\n\n"
+    schema = schema + "CREATE"
     if (baseArgs.getDDLExternal)
-      schema = schema + " external "
-    schema = schema + "table " + baseArgs.getDDLHivetbl + " ( \n"
+      schema = schema + " EXTERNAL "
+    schema = schema + "TABLE " + baseArgs.getDDLHivetbl + " ( \n"
     for (i <- 0 until extSchema.length) {
       schema = schema + "\t" + extSchema.apply(i).name + " " + extSchema.apply(i).dataType.sql
       if (i < extSchema.length - 1)
@@ -41,8 +43,9 @@ class DDL {
       schema = schema + "LOCATION \"" + baseArgs.getDDLPath + "\"\n"
     if (!baseArgs.getDDLCompress.equals(""))
       schema = schema + "TBLPROPERTIES  (\"" + baseArgs.getDDLTblFormat + ".compress\"=\"" + baseArgs.getDDLCompress + "\")\n"
-    schema = schema + ";\n"
+    schema = schema + ";\n\n"
 
+    schema = schema + "MSCK REPAIR TABLE " + baseArgs.getDDLHivetbl + ";\n"
     write(schema, baseArgs)
   }
 

@@ -19,23 +19,25 @@ class ClassDDLShould {
       "-ddlHivetbl", "raw_mysql_sakila.actor",
       "-ddlTblFormat", "ORC",
       "-ddlPath", "/datalake/data/raw/mysql/sakila/actor",
-      "-ddlPart", "dlk_cob_date",
+      "-ddlPart", "dlk_cob_date string",
       "-ddlBucketing", "num",
       "-ddlBucketingFigure", "5",
       "-ddlCompress", "SNAPPY",
       "-ddlExternal"
     )
-    var requared_schems = "create external table raw_mysql_sakila.actor { \n" +
+    var requared_schems = "CREATE SCHEMA IF NOT EXISTS raw_mysql_sakila;\n\n" +
+      "DROP TABLE IF EXISTS raw_mysql_sakila.actor;\n\n" +
+      "CREATE EXTERNAL TABLE raw_mysql_sakila.actor ( \n" +
       "\tnum INT,\n" +
       "\tletter STRING\n" +
-      "} \n" +
-      "PARTITIONED BY (dlk_cob_date) \n" +
+      ") \n" +
+      "PARTITIONED BY (dlk_cob_date string) \n" +
       "CLUSTERED BY (num) INTO 5 BUCKETS \n" +
       "STORED AS ORC\n" +
       "LOCATION \"/datalake/data/raw/mysql/sakila/actor\"\n" +
       "TBLPROPERTIES  (\"ORC.compress\"=\"SNAPPY\")\n" +
-      ";" +
-      "\n"
+      ";\n\n" +
+      "MSCK REPAIR TABLE raw_mysql_sakila.actor;\n"
     val baseArgs = new BaseArgs()
     val jc = new JCommander()
     jc.setProgramName("Giraffe")
@@ -53,7 +55,6 @@ class ClassDDLShould {
     for (line <- Source.fromFile("\\git\\Giraffe\\test\\raw_mysql_sakila.actor.sql").getLines) {
       out_schema = out_schema + line + "\n"
     }
-
     Assert.assertEquals(requared_schems, out_schema)
   }
 }
