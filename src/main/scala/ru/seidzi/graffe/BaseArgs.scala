@@ -15,8 +15,10 @@ class BaseArgs {
   private var password: String = ""
   @Parameter(names = Array("-query"), required = true, description = "SQL query(destination database dialect)", order = 5)
   private var query: String = ""
-  @Parameter(names = Array("-sqlOutPath"), required = true, description = "output path for sql", order = 7)
+  @Parameter(names = Array("-sqlOutPath"), required = false, description = "output path for sql", order = 7)
   private var sqlOutPath: String = ""
+  @Parameter(names = Array("-fetchSchema"), required = false, description = "fetch external schema into console", order = 15)
+  private var fetchSchema: Boolean = false
   @Parameter(names = Array("-ddlHivetbl"), required = false, description = "ddl table name with schema", order = 8)
   private var ddlHivetbl: String = ""
   @Parameter(names = Array("-ddlTblFormat"), required = false, description = "file format", order = 9)
@@ -63,5 +65,7 @@ class BaseArgs {
   def getDDLCompress: String = ddlCompress
 
   def getDDLExternal: Boolean = ddlExternal
+
+  def getFetchSchema: Boolean = fetchSchema
 
 }

@@ -36,7 +36,13 @@ object Main {
     //      val hiveSchema = Schema.getHiveSchema(baseArgs)
     //      diff(extSchema, hiveSchema)
     //    }else{
-    new DDL().create(extSchema, baseArgs)
+    if (baseArgs.getFetchSchema){
+      for (i <- 0 until extSchema.length) {
+        println( extSchema.apply(i).name + " " + extSchema.apply(i).dataType.sql )
+      }
+    } else {
+      new DDL().create(extSchema, baseArgs)
+    }
     //    }
   }
 }

@@ -7,6 +7,7 @@ class InitConfiguration {
     val spark = SparkSession
       .builder()
       .appName("Giraffe")
+//      .master("local")
       //      .enableHiveSupport() //TODO: future for diff between hive and ext schemas
       .getOrCreate()
 
