@@ -32,9 +32,6 @@ Usage: Giraffe [options]
   * -ddlPath
       _path for new table data_
       Default: <empty string>
-  * -ddlBucketingFigure
-      _number buckets for new table_
-      Default: <empty string>
   * -ddlExternal
       _compression codec for new table(NONE, ZLIB, SNAPPY)_
       Default: false
@@ -43,6 +40,9 @@ Usage: Giraffe [options]
       Default: <empty string>
   * -ddlBucketing
       _bucketing column(s) for new table_
+      Default: <empty string>
+  * -ddlBucketingFigure
+      _number buckets for new table_
       Default: <empty string>
   * -ddlCompress
       _compression codec for new table(NONE, ZLIB, SNAPPY)_
@@ -94,7 +94,12 @@ With dependencies:
   -ddlExternal</pre>
 
 Created hive ddl:
-<pre>create external table raw_mysql_sakila.actor (
+<pre>
+CREATE SCHEMA IF NOT EXISTS raw_mysql_sakila;
+
+DROP TABLE IF EXISTS raw_mysql_sakila.actor;
+
+create external table raw_mysql_sakila.actor (
 	actor_id INT,
 	first_name STRING,
 	last_name STRING,
@@ -106,4 +111,6 @@ STORED AS ORC
 LOCATION "/datalake/data/raw/mysql/sakila/actor"
 TBLPROPERTIES  ("ORC.compress"="SNAPPY")
 ;
+
+MSCK REPAIR TABLE raw_mysql_sakila.actor;
 </pre>
