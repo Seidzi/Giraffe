@@ -44,7 +44,7 @@ class BaseArgs {
 
   def getPassword: String = password
 
-  def getQuery: String = "(" + query + ")" + "as t"
+  def getQuery: String = "(" + query + ")" + " foo"
 
   def getSqlOutPath: String = sqlOutPath
 
